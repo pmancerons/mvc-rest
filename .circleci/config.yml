@@ -6,8 +6,9 @@ orbs:
 workflows:
   maven_test:
     jobs:
-      - maven/test
-      - run:
-        command: cobertura:cobertura # checkout, build, test, and upload test results
-      - run:
-        command: bash <(curl -s https://codecov.io/bash)
+      - maven/test  cobertura:cobertura # checkout, build, test, and upload test results
+
+    build:
+      steps:
+        - run:
+          command: bash <(curl -s https://codecov.io/bash)
