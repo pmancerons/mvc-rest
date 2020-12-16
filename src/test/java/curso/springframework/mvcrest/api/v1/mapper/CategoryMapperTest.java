@@ -26,16 +26,16 @@ class CategoryMapperTest {
         assertEquals(NAME,categoryDTO.getName());
     }
 
-    @Test
-    void categoryDtoToCategory() {
-        CategoryDTO categoryDTO = new CategoryDTO();
-        categoryDTO.setId(ID);
-        categoryDTO.setName(NAME);
-
-        Category category = categoryMapper.categoryDtoToCategory(categoryDTO);
-
-        assertNotNull(category);
-        assertEquals(ID,category.getId());
-        assertEquals(NAME,category.getName());
-    }
+//    @Test
+//    void categoryDtoToCategory() {
+//        CategoryDTO categoryDTO = new CategoryDTO();
+//        categoryDTO.setId(ID);
+//        categoryDTO.setName(NAME);
+//
+//        Category category = categoryMapper.categoryDtoToCategory(categoryDTO);
+//
+//        assertNotNull(category);
+//        assertEquals(ID,category.getId());
+//        assertEquals(NAME,category.getName());
+//    }
 }
