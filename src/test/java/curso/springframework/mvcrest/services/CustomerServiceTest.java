@@ -2,6 +2,7 @@ package curso.springframework.mvcrest.services;
 
 import curso.springframework.mvcrest.api.v1.mapper.CustomerMapper;
 import curso.springframework.mvcrest.api.v1.model.CustomerDTO;
+import curso.springframework.mvcrest.controller.v1.CustomerController;
 import curso.springframework.mvcrest.domain.Customer;
 import curso.springframework.mvcrest.repositories.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +25,6 @@ class CustomerServiceTest {
     public static final long ID = 3l;
     public static final String FIRST_NAME = "test";
     public static final String LAST_NAME = "customer";
-    public static final String API_URL = "/api/v1/customers/";
 
     CustomerService customerService;
 
@@ -75,6 +75,32 @@ class CustomerServiceTest {
 
         assertEquals(FIRST_NAME,customerDTO.getFirstName());
         assertEquals(LAST_NAME,customerDTO.getLastName());
-        assertEquals(API_URL + ID,customerDTO.getUrl());
+        assertEquals(CustomerController.CUSTOMER_URL + "/" + ID,customerDTO.getUrl());
+    }
+
+
+    @Test
+    void updateCustomer(){
+        Customer cus = new Customer();
+        cus.setId(ID);
+        cus.setFirstName(FIRST_NAME);
+        cus.setLastName(LAST_NAME);
+
+        Mockito.when(customerRepository.save(ArgumentMatchers.any())).thenReturn(cus);
+
+        CustomerDTO customerDTO = customerService.updateCustomer(ID,new CustomerDTO());
+
+        assertEquals(FIRST_NAME,customerDTO.getFirstName());
+        assertEquals(LAST_NAME,customerDTO.getLastName());
+        assertEquals(CustomerController.CUSTOMER_URL + "/" + ID,customerDTO.getUrl());
+    }
+
+    @Test
+    void deleteCustomer(){
+        Long id  = 1l;
+
+        customerService.deleteById(id);
+
+        Mockito.verify(customerRepository, Mockito.times(1)).deleteById(ArgumentMatchers.anyLong());
     }
 }

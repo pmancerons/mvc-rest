@@ -1,8 +1,9 @@
 package curso.springframework.mvcrest.services;
 
-import curso.springframework.mvcrest.NotFoundException;
+import curso.springframework.mvcrest.exceptions.NotFoundException;
 import curso.springframework.mvcrest.api.v1.mapper.CustomerMapper;
 import curso.springframework.mvcrest.api.v1.model.CustomerDTO;
+import curso.springframework.mvcrest.controller.v1.CustomerController;
 import curso.springframework.mvcrest.domain.Customer;
 import curso.springframework.mvcrest.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,6 @@ import java.util.stream.Collectors;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-    public static final String API_URL = "/api/v1/customers/";
 
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
@@ -24,13 +24,17 @@ public class CustomerServiceImpl implements CustomerService {
         this.customerMapper = customerMapper;
     }
 
+    private String getCustomerURL(Long id){
+        return CustomerController.CUSTOMER_URL + "/" + id;
+    }
+
     @Override
     public List<CustomerDTO> getAllCustomers() {
         return customerRepository.findAll()
                 .stream()
                 .map(customer -> {
                     CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
-                    customerDTO.setUrl(API_URL + customer.getId());
+                    customerDTO.setUrl(getCustomerURL(customer.getId()));
                     return customerDTO;
                 })
                 .collect(Collectors.toList());
@@ -44,18 +48,39 @@ public class CustomerServiceImpl implements CustomerService {
             throw new NotFoundException();
         }
 
-        return customerMapper.customerToCustomerDTO(optionalCustomer.get());
+        Customer customer = optionalCustomer.get();
+        CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
+        customerDTO.setUrl(getCustomerURL(customer.getId()));
+
+        return customerDTO;
     }
 
     @Override
     public CustomerDTO createNewCustomer(CustomerDTO customerDTO) {
         Customer customerToSave = customerMapper.customerDTOtoCustomer(customerDTO);
 
+        return saveCustomerAndReturnDTO(customerToSave);
+    }
+
+    private CustomerDTO saveCustomerAndReturnDTO(Customer customerToSave) {
         Customer customerSaved = customerRepository.save(customerToSave);
 
         CustomerDTO customerDTOSaved = customerMapper.customerToCustomerDTO(customerSaved);
-        customerDTOSaved.setUrl(API_URL + customerSaved.getId());
+        customerDTOSaved.setUrl(getCustomerURL(customerSaved.getId()));
 
         return customerDTOSaved;
+    }
+
+    @Override
+    public CustomerDTO updateCustomer(Long id, CustomerDTO customerDTO) {
+        Customer customerToSave = customerMapper.customerDTOtoCustomer(customerDTO);
+        customerToSave.setId(id);
+
+        return saveCustomerAndReturnDTO(customerToSave);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        customerRepository.deleteById(id);
     }
 }
