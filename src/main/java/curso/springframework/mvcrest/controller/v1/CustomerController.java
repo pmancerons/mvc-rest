@@ -1,18 +1,12 @@
 package curso.springframework.mvcrest.controller.v1;
 
-import ch.qos.logback.core.util.ContentTypeUtil;
-import com.sun.xml.internal.ws.client.sei.ResponseBuilder;
 import curso.springframework.mvcrest.api.v1.model.CustomerDTO;
 import curso.springframework.mvcrest.api.v1.model.CustomerListDTO;
 import curso.springframework.mvcrest.services.CustomerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponses;
-import io.swagger.annotations.Tag;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.w3c.dom.html.HTMLTableSectionElement;
 
 
 @Api(tags = "Customer Documentation and examples")
