@@ -1,13 +1,21 @@
 package curso.springframework.mvcrest.controller.v1;
 
+import ch.qos.logback.core.util.ContentTypeUtil;
+import com.sun.xml.internal.ws.client.sei.ResponseBuilder;
 import curso.springframework.mvcrest.api.v1.model.CustomerDTO;
 import curso.springframework.mvcrest.api.v1.model.CustomerListDTO;
 import curso.springframework.mvcrest.services.CustomerService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.w3c.dom.html.HTMLTableSectionElement;
 
+
+@Api(tags = "Customer Documentation and examples")
 @RestController
 @RequestMapping(CustomerController.CUSTOMER_URL)
 public class CustomerController {
@@ -20,7 +28,10 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping({"","/"})
+    @ApiOperation(value = "This operation returns back all the customers"
+            ,notes = "these are the notes for this operation"
+            ,produces = "Application/json")
+    @GetMapping({""})
     @ResponseStatus(HttpStatus.OK)
     public CustomerListDTO getAllCustomers(){
 
@@ -33,7 +44,7 @@ public class CustomerController {
         return customerService.getCustomerById(id);
     }
 
-    @PostMapping({"","/"})
+    @PostMapping({""})
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerDTO createNewCustomer(@RequestBody CustomerDTO newCustomer){
         return customerService.createNewCustomer(newCustomer);
