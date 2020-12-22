@@ -1,7 +1,6 @@
 package curso.springframework.mvcrest.api.v1.mapper;
 
-import curso.springframework.mvcrest.api.v1.mapper.CustomerMapper;
-import curso.springframework.mvcrest.api.v1.model.CustomerDTO;
+import curso.springframework.model.CustomerDTO;
 import curso.springframework.mvcrest.domain.Customer;
 import org.junit.jupiter.api.Test;
 

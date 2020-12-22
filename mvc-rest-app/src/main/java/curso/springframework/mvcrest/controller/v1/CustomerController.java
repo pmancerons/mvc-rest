@@ -1,7 +1,7 @@
 package curso.springframework.mvcrest.controller.v1;
 
-import curso.springframework.mvcrest.api.v1.model.CustomerDTO;
-import curso.springframework.mvcrest.api.v1.model.CustomerListDTO;
+import curso.springframework.model.CustomerDTO;
+import curso.springframework.model.CustomerListDTO;
 import curso.springframework.mvcrest.services.CustomerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,8 +28,10 @@ public class CustomerController {
     @GetMapping({""})
     @ResponseStatus(HttpStatus.OK)
     public CustomerListDTO getAllCustomers(){
+        CustomerListDTO customerListDTO = new CustomerListDTO();
+        customerListDTO.getCustomers().addAll(customerService.getAllCustomers());
 
-        return new CustomerListDTO(customerService.getAllCustomers());
+        return customerListDTO;
     }
 
     @GetMapping("/{id}")

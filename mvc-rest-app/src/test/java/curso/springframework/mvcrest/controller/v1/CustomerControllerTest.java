@@ -1,6 +1,6 @@
 package curso.springframework.mvcrest.controller.v1;
 
-import curso.springframework.mvcrest.api.v1.model.CustomerDTO;
+import curso.springframework.model.CustomerDTO;
 import curso.springframework.mvcrest.controller.RestResponseEntityExceptionHandler;
 import curso.springframework.mvcrest.exceptions.NotFoundException;
 import curso.springframework.mvcrest.services.CustomerService;
@@ -57,12 +57,14 @@ class CustomerControllerTest extends AbstractRestControllerTest {
         Mockito.when(customerService.getAllCustomers()).thenReturn(customersDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.get(CustomerController.CUSTOMER_URL )
-                    .contentType(MediaType.APPLICATION_JSON))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.customers", Matchers.hasSize(2)));
 
         mockMvc.perform(MockMvcRequestBuilders.get(CustomerController.CUSTOMER_URL )
-                .contentType(MediaType.APPLICATION_JSON))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.customers", Matchers.hasSize(2)));
     }
@@ -76,7 +78,8 @@ class CustomerControllerTest extends AbstractRestControllerTest {
         Mockito.when(customerService.getCustomerById(ArgumentMatchers.anyLong())).thenReturn(customerDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.get(CustomerController.CUSTOMER_URL + "/1")
-                .contentType(MediaType.APPLICATION_JSON))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName", Matchers.equalTo(FIRST_NAME)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastName", Matchers.equalTo(LAST_NAME)));
@@ -92,12 +95,13 @@ class CustomerControllerTest extends AbstractRestControllerTest {
         CustomerDTO returnDTO = new CustomerDTO();
         returnDTO.setFirstName(customerDTO.getFirstName());
         returnDTO.setLastName(customerDTO.getLastName());
-        returnDTO.setUrl("/api/v1/customers/1");
+        returnDTO.setCustomerUrl("/api/v1/customers/1");
 
         Mockito.when(customerService.createNewCustomer(ArgumentMatchers.any())).thenReturn(returnDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.post(CustomerController.CUSTOMER_URL)
-                     .contentType(MediaType.APPLICATION_JSON)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
                     .content(asJsonString(customerDTO)))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName", Matchers.equalTo(FIRST_NAME)))
@@ -115,13 +119,14 @@ class CustomerControllerTest extends AbstractRestControllerTest {
         CustomerDTO returnDTO = new CustomerDTO();
         returnDTO.setFirstName(customerDTO.getFirstName());
         returnDTO.setLastName(customerDTO.getLastName());
-        returnDTO.setUrl("/api/v1/customers/1");
+        returnDTO.setCustomerUrl("/api/v1/customers/1");
 
         Mockito.when(customerService.updateCustomer(ArgumentMatchers.anyLong(),ArgumentMatchers.any())).thenReturn(returnDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.put(CustomerController.CUSTOMER_URL + "/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(customerDTO)))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .content(asJsonString(customerDTO)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName", Matchers.equalTo(FIRST_NAME)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastName", Matchers.equalTo(LAST_NAME)));

@@ -1,7 +1,7 @@
 package curso.springframework.mvcrest.services;
 
+import curso.springframework.model.CustomerDTO;
 import curso.springframework.mvcrest.api.v1.mapper.CustomerMapper;
-import curso.springframework.mvcrest.api.v1.model.CustomerDTO;
 import curso.springframework.mvcrest.controller.v1.CustomerController;
 import curso.springframework.mvcrest.domain.Customer;
 import curso.springframework.mvcrest.repositories.CustomerRepository;
@@ -77,7 +77,7 @@ class CustomerServiceTest {
 
         assertEquals(FIRST_NAME,customerDTO.getFirstName());
         assertEquals(LAST_NAME,customerDTO.getLastName());
-        assertEquals(CustomerController.CUSTOMER_URL + "/" + ID,customerDTO.getUrl());
+        assertEquals(CustomerController.CUSTOMER_URL + "/" + ID,customerDTO.getCustomerUrl());
     }
 
 
@@ -94,7 +94,7 @@ class CustomerServiceTest {
 
         assertEquals(FIRST_NAME,customerDTO.getFirstName());
         assertEquals(LAST_NAME,customerDTO.getLastName());
-        assertEquals(CustomerController.CUSTOMER_URL + "/" + ID,customerDTO.getUrl());
+        assertEquals(CustomerController.CUSTOMER_URL + "/" + ID,customerDTO.getCustomerUrl());
     }
 
     @Test

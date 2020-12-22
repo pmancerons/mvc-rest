@@ -1,6 +1,6 @@
 package curso.springframework.mvcrest.api.v1.mapper;
 
-import curso.springframework.mvcrest.api.v1.model.CustomerDTO;
+import curso.springframework.model.CustomerDTO;
 import curso.springframework.mvcrest.domain.Customer;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

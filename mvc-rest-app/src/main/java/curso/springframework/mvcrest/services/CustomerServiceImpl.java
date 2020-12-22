@@ -1,10 +1,10 @@
 package curso.springframework.mvcrest.services;
 
+import curso.springframework.model.CustomerDTO;
 import curso.springframework.mvcrest.controller.v1.CustomerController;
 import curso.springframework.mvcrest.exceptions.NotFoundException;
 import curso.springframework.mvcrest.repositories.CustomerRepository;
 import curso.springframework.mvcrest.api.v1.mapper.CustomerMapper;
-import curso.springframework.mvcrest.api.v1.model.CustomerDTO;
 import curso.springframework.mvcrest.domain.Customer;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +34,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .stream()
                 .map(customer -> {
                     CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
-                    customerDTO.setUrl(getCustomerURL(customer.getId()));
+                    customerDTO.setCustomerUrl(getCustomerURL(customer.getId()));
                     return customerDTO;
                 })
                 .collect(Collectors.toList());
@@ -50,7 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         Customer customer = optionalCustomer.get();
         CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
-        customerDTO.setUrl(getCustomerURL(customer.getId()));
+        customerDTO.setCustomerUrl(getCustomerURL(customer.getId()));
 
         return customerDTO;
     }
@@ -66,7 +66,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customerSaved = customerRepository.save(customerToSave);
 
         CustomerDTO customerDTOSaved = customerMapper.customerToCustomerDTO(customerSaved);
-        customerDTOSaved.setUrl(getCustomerURL(customerSaved.getId()));
+        customerDTOSaved.setCustomerUrl(getCustomerURL(customerSaved.getId()));
 
         return customerDTOSaved;
     }

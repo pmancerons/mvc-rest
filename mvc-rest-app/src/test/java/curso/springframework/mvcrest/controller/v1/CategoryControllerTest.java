@@ -54,11 +54,13 @@ class CategoryControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/categories")
                     .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
                 ).andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.categories", Matchers.hasSize(2)));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/categories/")
                         .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
                 ).andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.categories", Matchers.hasSize(2)));
 
@@ -75,6 +77,7 @@ class CategoryControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/categories/testDTO")
                     .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
                 ).andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.equalTo(NAME)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.equalTo(1)));

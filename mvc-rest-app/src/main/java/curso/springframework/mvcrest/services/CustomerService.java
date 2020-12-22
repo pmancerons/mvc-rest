@@ -1,7 +1,7 @@
 package curso.springframework.mvcrest.services;
 
+import curso.springframework.model.CustomerDTO;
 import curso.springframework.mvcrest.exceptions.NotFoundException;
-import curso.springframework.mvcrest.api.v1.model.CustomerDTO;
 
 import java.util.List;
 
